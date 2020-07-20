@@ -1,5 +1,6 @@
 package java_board;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,10 +9,17 @@ import util.Util;
 
 public class Test {
 	static ArrayList<Article> articles = new ArrayList<Article>();
+=======
+import java.util.Scanner;
+
+public class Test {
+
+>>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
 		String cmd = "";
+<<<<<<< HEAD
 //		String store = null; // "" -> 없는 데이터, null
 		
 		int id = 1;
@@ -21,6 +29,15 @@ public class Test {
 			
 			System.out.print("명령어를 입력해주세요 : ");
 			cmd = sc.nextLine();
+=======
+		String store = null; // "" -> 없는 데이터, null
+		
+		while(true) {
+			
+			System.out.print("명령어를 입력해주세요 : ");
+			cmd = sc.next();
+			
+>>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
 			if(cmd.equals("exit")) {
 				System.out.println("프로그램 종료");
 				break;
@@ -33,6 +50,7 @@ public class Test {
 			}
 			
 			if(cmd.equals("add")) {
+<<<<<<< HEAD
 				
 				Article article = new Article();
 				article.id = id;
@@ -93,10 +111,30 @@ public class Test {
 					System.out.println("없는 게시물 번호입니다.");
 				}
 				
+=======
+				store = sc.nextLine();
+				System.out.println("저장이 완료되었습니다.");
+			}
+			if(cmd.equals("read")) {
+				if(store == null) {
+					System.out.println("데이터가 없습니다.");
+				} else {
+					System.out.println(store);
+				}
+			}
+			if(cmd.equals("update")) {
+				System.out.println("어떤 값으로 수정하시겠습니까? : ");
+				store = sc.next();
+			}
+			if(cmd.equals("delete")) {
+				store = null;
+				System.out.println("삭제가 완료되었습니다.");
+>>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
 			}
 		}
 		
 	}
+<<<<<<< HEAD
 	
 	public static Article get_article_by_id(int id) {
 		Article article = null;
@@ -123,3 +161,7 @@ class Article {
 	String regDate;
 }
 
+=======
+
+}
+>>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
