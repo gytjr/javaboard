@@ -1,6 +1,5 @@
 package java_board;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,35 +8,35 @@ import util.Util;
 
 public class Test {
 	static ArrayList<Article> articles = new ArrayList<Article>();
-=======
-import java.util.Scanner;
-
-public class Test {
-
->>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
 		String cmd = "";
-<<<<<<< HEAD
 //		String store = null; // "" -> 없는 데이터, null
 		
 		int id = 1;
 		
-				
-		while(true) {
-			
-			System.out.print("명령어를 입력해주세요 : ");
-			cmd = sc.nextLine();
-=======
-		String store = null; // "" -> 없는 데이터, null
+		//테스트 데이터 만들기
+		
+		Article article1 = new Article();
+		article1.id = 1;
+		article1.title = "테스트 데이터 제목";
+		article1.body = "테스트 데이터 내용";
+		article1.writer = "테스트 데이터 내용";
+		article1.regDate = Util.getCurrentDate();
+		
+		
+		Article article2 = new Article(2, "제목2", "내용2", Util.getCurrentDate());
+		Article article3 = new Article(3, "제목3", "내용3", Util.getCurrentDate());
+		
+		articles.add(article1);		
+		articles.add(article2);
+		articles.add(article3);
 		
 		while(true) {
 			
 			System.out.print("명령어를 입력해주세요 : ");
-			cmd = sc.next();
-			
->>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
+			cmd = sc.nextLine();
 			if(cmd.equals("exit")) {
 				System.out.println("프로그램 종료");
 				break;
@@ -50,7 +49,6 @@ public class Test {
 			}
 			
 			if(cmd.equals("add")) {
-<<<<<<< HEAD
 				
 				Article article = new Article();
 				article.id = id;
@@ -81,7 +79,11 @@ public class Test {
 				for(int i = 0; i < articles.size() ; i++) {
 					System.out.println("번호 : " + articles.get(i).id);
 					System.out.println("제목 : " + articles.get(i).title);
-					System.out.println("작성일 : " + articles.get(i).regDate);
+					
+					String str = articles.get(i).regDate;
+					String[] arr = str.split(" ");
+					
+					System.out.println("작성일 : " + arr[0]);
 					//System.out.println("내용 : " + articles.get(i) + "\n");
 				}
 			}
@@ -111,30 +113,10 @@ public class Test {
 					System.out.println("없는 게시물 번호입니다.");
 				}
 				
-=======
-				store = sc.nextLine();
-				System.out.println("저장이 완료되었습니다.");
-			}
-			if(cmd.equals("read")) {
-				if(store == null) {
-					System.out.println("데이터가 없습니다.");
-				} else {
-					System.out.println(store);
-				}
-			}
-			if(cmd.equals("update")) {
-				System.out.println("어떤 값으로 수정하시겠습니까? : ");
-				store = sc.next();
-			}
-			if(cmd.equals("delete")) {
-				store = null;
-				System.out.println("삭제가 완료되었습니다.");
->>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
 			}
 		}
 		
 	}
-<<<<<<< HEAD
 	
 	public static Article get_article_by_id(int id) {
 		Article article = null;
@@ -154,14 +136,24 @@ public class Test {
 }
 
 class Article {
+	
+	
+	
 	int id;
 	String title;
 	String body;
 	String writer;
 	String regDate;
+	
+	//기본 생성자 다른거있으면 안만들어줌
+	Article(){
+		
+	}
+	Article(int id, String title, String body, String regDate) {
+		this.id = id;
+		this.title = title;
+		this.body = body;
+		this.regDate = regDate;
+	}
 }
 
-=======
-
-}
->>>>>>> 10086d36103de675e9a8aa32c842e8537eaa8475
