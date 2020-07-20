@@ -3,6 +3,9 @@ package java_board;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import util.Util;
+
+
 public class Test {
 	static ArrayList<Article> articles = new ArrayList<Article>();
 	public static void main(String[] args) {
@@ -39,6 +42,10 @@ public class Test {
 				String title = sc.nextLine();
 				article.title = title;
 				
+				article.regDate = Util.getCurrentDate();
+				
+				
+				
 //				System.out.println("내용을 입력해주세요");
 //				String body = sc.nextLine();
 //				article.body = body;
@@ -56,6 +63,7 @@ public class Test {
 				for(int i = 0; i < articles.size() ; i++) {
 					System.out.println("번호 : " + articles.get(i).id);
 					System.out.println("제목 : " + articles.get(i).title);
+					System.out.println("작성일 : " + articles.get(i).regDate);
 					//System.out.println("내용 : " + articles.get(i) + "\n");
 				}
 			}
@@ -112,5 +120,6 @@ class Article {
 	String title;
 	String body;
 	String writer;
+	String regDate;
 }
 
