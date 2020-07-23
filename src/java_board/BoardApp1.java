@@ -7,6 +7,9 @@ import util.Util;
 
 public class BoardApp1 {
 	ArrayList<Article> articles = new ArrayList<Article>();
+	ArrayList<Reply> replies = new ArrayList<Reply>();
+	int lastArticleId = 0; //게시물번호 관리용
+	int lastReplyId = 0; //댓글 번호 관리용
 	
 	void start() {
 
@@ -14,25 +17,11 @@ public class BoardApp1 {
 		String cmd = "";
 //		String store = null; // "" -> 없는 데이터, null
 		
-		int id = 1;
+		make_test_data();
+		print_articles(articles);
 		
 		//테스트 데이터 만들기
 		
-		Article article1 = new Article();
-		article1.id = 1;
-		article1.title = "테스트 데이터 제목";
-		article1.body = "테스트 데이터 내용";
-		article1.writer = "테스트 데이터 내용";
-		article1.regDate = Util.getCurrentDate();
-		article1.hit = 20;
-		
-		
-		Article article2 = new Article(2, "제목2", "내용2", Util.getCurrentDate(), 30);
-		Article article3 = new Article(3, "제목3", "내용3", Util.getCurrentDate(), 0);
-		
-		articles.add(article1);		
-		articles.add(article2);
-		articles.add(article3);
 		
 		while(true) {
 			
@@ -54,8 +43,8 @@ public class BoardApp1 {
 			if(cmd.equals("add")) {
 				
 				Article article = new Article();
-				article.id = id;
-				id++;
+				article.id = lastArticleId;
+				lastArticleId++;
 				
 				System.out.println("제목을 입력해주세요");
 				String title = sc.nextLine();
@@ -117,19 +106,9 @@ public class BoardApp1 {
 				
 				ArrayList<Article> searchedArticles = new ArrayList<>();
 				
-				if(searchFlag == 1) {
-					for(int i = 0; i < articles.size(); i++) {
-						if(articles.get(i).title.contains(keyword)) {
-							searchedArticles.add(articles.get(i));
-						}
-					}
-				}
-				
-				if(searchFlag == 2) {
-					for(int i = 0; i < articles.size(); i++) {
-						if(articles.get(i).body.contains(keyword)) {
-							searchedArticles.add(articles.get(i));
-						}
+				for(int i = 0; i < articles.size(); i++) {
+					if(articles.get(i).getPropertyByType(searchFlag).contains(keyword)) {
+						searchedArticles.add(articles.get(i));
 					}
 				}
 				
@@ -145,10 +124,56 @@ public class BoardApp1 {
 				}else {
 					article.hit++;
 					print_article(article);
+					ArrayList<Reply> replies = get_replies_by_parent_id(articleId);
+					print_replies(replies);
+					while(true) {
+						System.out.println("1. 댓글 2. 좋아요 3. 수정 4. 삭제 5. 뒤로가기");
+						int detailCmd = Integer.parseInt(sc.nextLine());
+						
+						if(detailCmd == 1) {
+							int replyId = lastReplyId;
+							lastReplyId++;
+							
+							System.out.println("댓글 내용을 입력해주세요.");
+							String replyBody = sc.nextLine();
+							String writer = "익명";
+							String regDate = Util.getCurrentDate();
+							
+							Reply new_reply = new Reply(replyId, articleId, replyBody, writer, regDate);
+							
+							this.replies.add(new_reply);
+							System.out.println("댓글이 성공적으로 등록되었습니다.");
+							
+						} else if(detailCmd ==5) {
+							break;
+						}
+					}
 				}
 			}
 		}
 	}
+	
+	public ArrayList<Reply> get_replies_by_parent_id(int parent_id){
+		
+		ArrayList<Reply> result = new ArrayList<Reply>();
+		
+		for(int i = 0; i < this.replies.size(); i++) {
+			if(this.replies.get(i).parent_id == parent_id) {
+				result.add(this.replies.get(i));
+			}
+		}
+		return result;
+	}
+	
+	public void print_replies(ArrayList<Reply> repiles) {
+		System.out.println("======== 댓글 ========");
+		for(int i = 0; i < replies.size(); i++) {
+			System.out.println("제목 : " + replies.get(i).body);
+			System.out.println("작성자 : " + replies.get(i).writer);
+			System.out.println("등록일 : " + replies.get(i).regDate);
+		}
+	}
+	
 	public void print_article(Article article) {
 		System.out.println("======== 게시물 목록 ========");
 		System.out.println("번호 : " + article.id);
@@ -184,6 +209,34 @@ public class BoardApp1 {
 			System.out.println("작성일 : " + arr[0]);
 			System.out.println("조회수 : " + articles.get(i).hit);
 		}
+	}
+	
+	public void make_test_data() {
+		Article article1 = new Article();
+		article1.id = 1;
+		article1.title = "테스트 데이터 제목";
+		article1.body = "테스트 데이터 내용";
+		article1.writer = "테스트 데이터 내용";
+		article1.regDate = Util.getCurrentDate();
+		article1.hit = 20;
+		
+		
+		Article article2 = new Article(2, "제목2", "내용2", Util.getCurrentDate(), 30);
+		Article article3 = new Article(3, "제목3", "내용3", Util.getCurrentDate(), 0);
+		
+		articles.add(article1);		
+		articles.add(article2);
+		articles.add(article3);
+		
+		lastArticleId = 4;
+		
+		Reply r1 = new Reply(1, 1, "댓글1", "작성자", Util.getCurrentDate());
+		Reply r2 = new Reply(2, 1, "댓글1", "작성자", Util.getCurrentDate());
+		Reply r3 = new Reply(3, 2, "댓글1", "작성자", Util.getCurrentDate());
+		
+		replies.add(r1);
+		replies.add(r2);
+		replies.add(r3);
 	}
 	
 }

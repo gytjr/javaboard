@@ -20,4 +20,14 @@ public class Article {
 		this.regDate = regDate;
 		this.hit = hit;
 	}
+	
+	String getPropertyByType(int type) {
+		String rst = "";
+		if(type == 1) {
+			rst = this.title;
+		}else if(type == 2) {
+			rst = this.body;
+		}
+		return rst;
+	}
 }
