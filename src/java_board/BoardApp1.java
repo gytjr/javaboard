@@ -1,6 +1,7 @@
 package java_board;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import util.Util;
@@ -144,9 +145,15 @@ public class BoardApp1 {
 							this.replies.add(new_reply);
 							System.out.println("댓글이 성공적으로 등록되었습니다.");
 							
-						} else if(detailCmd ==5) {
+						}else if(detailCmd == 2) {
+							System.out.println("1. 좋아요 2. 싫어요");
+							int likeOrHate = Integer.parseInt(sc.nextLine());
+							article.set_Like_and_hates("chacha", likeOrHate);
+						}else if(detailCmd ==5) {
 							break;
 						}
+						
+						
 					}
 				}
 			}
@@ -180,6 +187,11 @@ public class BoardApp1 {
 		System.out.println("제목 : " + article.title);
 		System.out.println("내용 : " + article.body);
 		System.out.println("조회수 : " + article.hit);
+		
+		HashMap<String, Integer> resultMap = article.get_likes_and_hates();
+		
+		System.out.println("좋아요 : " + resultMap.get("like"));
+		System.out.println("싫어요 : " + resultMap.get("hate"));
 	}
 
 	public Article get_article_by_id(int id) {
@@ -212,6 +224,21 @@ public class BoardApp1 {
 	}
 	
 	public void make_test_data() {
+		HashMap<String,Integer> likes1 = new HashMap<>();
+		likes1.put("chacha1", 1);
+		likes1.put("chacha2", 2);
+		likes1.put("chacha3", 1);
+		
+		HashMap<String,Integer> likes2 = new HashMap<>();
+		likes2.put("chacha1", 2);
+		likes2.put("chacha2", 2);
+		likes2.put("chacha3", 2);
+		
+		HashMap<String,Integer> likes3 = new HashMap<>();
+		likes3.put("chacha1", 1);
+		likes3.put("chacha2", 1);
+		likes3.put("chacha3", 1);
+		
 		Article article1 = new Article();
 		article1.id = 1;
 		article1.title = "테스트 데이터 제목";
@@ -219,10 +246,10 @@ public class BoardApp1 {
 		article1.writer = "테스트 데이터 내용";
 		article1.regDate = Util.getCurrentDate();
 		article1.hit = 20;
+		article1.likesAndHates = likes1;
 		
-		
-		Article article2 = new Article(2, "제목2", "내용2", Util.getCurrentDate(), 30);
-		Article article3 = new Article(3, "제목3", "내용3", Util.getCurrentDate(), 0);
+		Article article2 = new Article(2, "제목2", "내용2", Util.getCurrentDate(), 30, likes2);
+		Article article3 = new Article(3, "제목3", "내용3", Util.getCurrentDate(), 0, likes3);
 		
 		articles.add(article1);		
 		articles.add(article2);
