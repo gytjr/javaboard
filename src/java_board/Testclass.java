@@ -16,15 +16,16 @@ public class Testclass {
 			testList.add(article);
 		}
 		
-		int currentPageNo = 1;
-		int totalCountOfArticle = testList.size();
-		int articlePerPage = 3;
+		int currentPageNo = 1;//현재 페이지
+		int totalCountOfArticle = testList.size();//전체 게시물의 개수
+		int articlePerPage = 3;//페이지당 게시물의개수
+		int pageCount = 10;//페이지블록에 보여줄 페이지 개수
+		int startPage = 1; //시작페이지
+		int lastPage = totalCountOfArticle / articlePerPage +1; //마지막페이지
 		
-		int lastPage = totalCountOfArticle / articlePerPage +1;
 		
-		
-		int startIndex = (currentPageNo - 1) * articlePerPage; 
-		int endIndex = startIndex + articlePerPage;
+		int startIndex = (currentPageNo - 1) * articlePerPage;  //내가보여줄게시물
+		int endIndex = startIndex + articlePerPage; // 보여줄 게시물의 마지막 인덱스
 		
 		
 		Scanner sc = new Scanner(System.in);
@@ -39,13 +40,16 @@ public class Testclass {
 			}
 			
 			//페이지
-			int startPage = currentPageNo - 2;
-			
-			if(startPage <=0 ) {
-				startPage = 1;
+			int startPageInBlock = currentPageNo - 2;
+			int endPageInBlock = startPageInBlock + pageCount;
+			if(startPageInBlock < startPage) {
+				startPageInBlock = startPage;
+			}
+			if(startPageInBlock > lastPage) {
+				startPageInBlock = startPage;
 			}
 			System.out.print(1 + " ... ");
-			for(int i = startPage; i < startPage + 5; i++) {
+			for(int i = startPageInBlock; i < endPageInBlock; i++) {
 				if(i == currentPageNo) {
 					System.out.print("[" + i + "] ");
 				} else {
