@@ -6,14 +6,19 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import util.Util;
+import java_board.util.Util;
 
 public class BoardApp1 {
-
-	ArrayList<Article> articles = new ArrayList<Article>();
-	ArrayList<Reply> replies = new ArrayList<Reply>();
-	int lastArticleId = 0; // 게시물 번호 관리용
-	int lastReplyId = 0; // 댓글 번호 관리용
+	//public, default, protected, private
+	//public 모든 객체가 접근가능.
+	//protected 같은 패키지 객체 + 상속관계.
+	//default 같은 패키지 객체.
+	//private 자기 자신만
+	private ArrayList<Article> articles = new ArrayList<Article>();
+	private ArrayList<Reply> replies = new ArrayList<Reply>();
+	private ArrayList<User> users = new ArrayList<User>();
+	private int lastArticleId = 0; // 게시물 번호 관리용
+	private int lastReplyId = 0; // 댓글 번호 관리용
 
 	void start() {
 		Scanner sc = new Scanner(System.in);
@@ -40,19 +45,20 @@ public class BoardApp1 {
 				System.out.println("search : 게시물 검색");
 				System.out.println("sort : 게시물 정렬 조회");
 				System.out.println("page : 페이지");
+				System.out.println("join : 회원가입");
 			}
 
 			if (cmd.equals("add")) {
 
 				Article article = new Article();
-				article.id = lastArticleId;
+				article.setId(lastArticleId);
 				lastArticleId++;
 
 				System.out.println("제목을 입력해주세요");
 				String title = sc.nextLine();
-				article.title = title;
+				article.setTitle(title);
 
-				article.regDate = Util.getCurrentDate();
+				article.setRegDate(Util.getCurrentDate());
 
 //				System.out.println("내용을 입력해주세요");
 //				String body = sc.nextLine();
@@ -75,7 +81,7 @@ public class BoardApp1 {
 
 					System.out.println("수정할 제목을 입력해주세요 : ");
 					String updated_title = sc.nextLine();
-					targetArticle.title = updated_title;
+					targetArticle.setTitle(updated_title);
 
 					System.out.println("수정이 완료되었습니다.");
 				} else {
@@ -174,7 +180,7 @@ public class BoardApp1 {
 					int pageCmd = Integer.parseInt(sc.nextLine());
 
 					if (pageCmd == 1) {
-						if (pagination.currentPageNo <= pagination.startPage) {
+						if (pagination.getCurrentPageNo() <= pagination.startPage) {
 							System.out.println("첫 페이지입니다.");
 							continue;
 						}
@@ -194,8 +200,38 @@ public class BoardApp1 {
 					}
 					print_articles(articles, pagination);
 				}
+			} else if (cmd.equals("join")) {
+				System.out.println("id 입력 : ");
+				String userId = sc.nextLine();
+				System.out.println("비밀번호 입력 : ");
+				String userPw = sc.nextLine();
+				System.out.println("이름 입력 : ");
+				String userName = sc.nextLine();
+				
+				User user = new User(userId, userPw, userName);
+				User target = getUserById(userId);
+				
+				
+				if(target == null) {
+					users.add(user);
+					System.out.println("가입이 완료되었습니다.");
+				}else {
+					System.out.println("중복된 아이디입니다.");
+				}
+				
+				
 			}
 		}
+	}
+	
+	public User getUserById(String userId) {
+		
+		for(int i = 0; i < users.size(); i++) {
+			if(userId.equals(users.get(i).userId)) {
+				return users.get(i);
+			}
+		}
+		
 	}
 
 	public ArrayList<Reply> get_replies_by_parent_id(int parent_id) {
